@@ -15,12 +15,11 @@ export class PetService {
         birthDate: dto.birthDate,
         weight: dto.weight,
         sex: dto.sex,
-        photoUrl: dto.photoUrl,
-        createdAt: Date.now(),
+        // createdAt: new Date().toString(),
         petOwners: {
           create: {
             userId: dto.userId,
-            role: 'owner',
+            ownerRole: 'owner',
           },
         },
       },

@@ -4,9 +4,13 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// generator client {
+//   provider = "prisma-client"
+//   output   = "../generated/prisma"
+// }
+
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -19,7 +23,7 @@ model User {
   email     String @unique
   name      String
   password  String
-  createdAt DateTime @default(now())
+  // createdAt DateTime @default(now())
 
   petOwners PetOwner[]
 }
@@ -33,7 +37,7 @@ model Pet {
   weight Float
   sex String
   photoUrl String?
-  createdAt DateTime @default(now())
+  // createdAt DateTime @default(now())
 
   petOwners PetOwner[]
 }
@@ -44,7 +48,7 @@ model PetOwner {
   petId String
   ownerRole String
   invitedBy String?
-  createdAt DateTime @default(now())
+  // createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
   pet Pet @relation(fields: [petId], references: [id])

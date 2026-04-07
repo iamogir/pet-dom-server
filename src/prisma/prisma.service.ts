@@ -7,12 +7,10 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   async onModuleInit() {
-    // eslint-disable-next-line
     await this.$connect();
   }
 
   async onModuleDestroy() {
-    // eslint-disable-next-line
     await this.$disconnect();
   }
 }
