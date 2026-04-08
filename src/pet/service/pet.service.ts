@@ -6,7 +6,7 @@ import { CreatePetDto } from '../dto/create-pet.dto';
 export class PetService {
   constructor(private prisma: PrismaService) {}
 
-  create(dto: CreatePetDto) {
+  create(dto: CreatePetDto, userId: string) {
     return this.prisma.pet.create({
       data: {
         name: dto.name,
@@ -18,7 +18,7 @@ export class PetService {
         // createdAt: new Date().toString(),
         petOwners: {
           create: {
-            userId: dto.userId,
+            userId: userId,
             ownerRole: 'owner',
           },
         },
