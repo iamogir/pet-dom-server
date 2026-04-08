@@ -18,7 +18,6 @@ export class PetController {
   }
 
   @Get('/all_pets_by_user')
-  @UseGuards(JwtAuthGuard)
   getAllPetsByUser(@Req() req: Request & { user: { id: string } }) {
     return this.petService.getAllPetsByUser(req.user.id);
   }
