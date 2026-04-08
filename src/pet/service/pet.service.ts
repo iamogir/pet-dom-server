@@ -6,7 +6,7 @@ import { CreatePetDto } from '../dto/create-pet.dto';
 export class PetService {
   constructor(private prisma: PrismaService) {}
 
-  create(dto: CreatePetDto, userId: string) {
+  addPet(dto: CreatePetDto, userId: string) {
     return this.prisma.pet.create({
       data: {
         name: dto.name,
@@ -20,6 +20,18 @@ export class PetService {
           create: {
             userId: userId,
             ownerRole: 'owner',
+          },
+        },
+      },
+    });
+  }
+
+  getAllPetsByUser(userId: string) {
+    return this.prisma.pet.findMany({
+      where: {
+        petOwners: {
+          some: {
+            userId: userId,
           },
         },
       },
