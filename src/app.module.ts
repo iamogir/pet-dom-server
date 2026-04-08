@@ -5,9 +5,17 @@ import { PetModule } from './pet/module/pet.module';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/module/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [PetModule, PrismaModule, AuthModule],
+  imports: [
+    PetModule,
+    PrismaModule,
+    AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
