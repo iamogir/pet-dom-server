@@ -13,7 +13,6 @@ export class PetController {
     @Body() dto: CreatePetDto,
     @Req() req: Request & { user: { id: string } },
   ) {
-    console.log(req.user);
     return this.petService.addPet(dto, req.user.id);
   }
 
