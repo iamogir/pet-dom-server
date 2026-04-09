@@ -8,7 +8,7 @@ import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 export class PetController {
   constructor(private readonly petService: PetService) {}
 
-  @Post('/add_pet')
+  @Post('/add_new_pet')
   addPet(
     @Body() dto: CreatePetDto,
     @Req() req: Request & { user: { id: string } },
