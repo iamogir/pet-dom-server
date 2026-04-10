@@ -14,9 +14,6 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto): Promise<ResponseRegisterDto> {
-
-    console.log(dto);
-
     const hash = await bcrypt.hash(dto.password, 10);
     const newUser = await this.prisma.user.create({
       data: {

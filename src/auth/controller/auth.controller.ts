@@ -9,15 +9,11 @@ export class AuthController {
 
   @Post('register')
   register(@Body() dto: RegisterDto) {
-    console.log('REGISTER HIT');
-    console.log('DTO:', dto);
     return this.authService.register(dto);
   }
 
   @Post('login')
   login(@Body() dto: LoginDto) {
-    console.log('changes');
-    console.log('new changes');
     return this.authService.login(dto);
   }
 
