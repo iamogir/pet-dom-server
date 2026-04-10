@@ -24,9 +24,9 @@ export class AuthService {
     });
 
     return new ResponseRegisterDto(
-      this.generateToken(newUser.id).access_token,
-      newUser.email,
+      this.generateToken(newUser.id),
       newUser.id,
+      newUser.email,
       newUser.name,
     );
   }
@@ -39,12 +39,10 @@ export class AuthService {
     const isValid = await bcrypt.compare(dto.password, user.password);
     if (!isValid) throw new UnauthorizedException();
 
-    return this.generateToken(user.id);
+    return { access_token: this.generateToken(user.id) };
   }
 
   private generateToken(id: string) {
-    return {
-      access_token: this.jwtService.sign({ id }),
-    };
+    return this.jwtService.sign({ id });
   }
 }
