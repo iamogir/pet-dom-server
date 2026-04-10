@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from '../dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from '../dto/login.dto';
+import { ResponseRegisterDto } from '../dto/register-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(dto: RegisterDto): Promise<{ access_token: string }> {
+  async register(dto: RegisterDto): Promise<ResponseRegisterDto> {
     const hash = await bcrypt.hash(dto.password, 10);
     const newUser = await this.prisma.user.create({
       data: {
@@ -21,7 +22,13 @@ export class AuthService {
         name: dto.name,
       },
     });
-    return this.generateToken(newUser.id);
+
+    return new ResponseRegisterDto(
+      this.generateToken(newUser.id).access_token,
+      newUser.email,
+      newUser.id,
+      newUser.name,
+    );
   }
 
   async login(dto: LoginDto): Promise<{ access_token: string }> {
