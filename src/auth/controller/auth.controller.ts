@@ -9,6 +9,8 @@ export class AuthController {
 
   @Post('register')
   register(@Body() dto: RegisterDto) {
+    console.log('REGISTER HIT');
+    console.log('DTO:', dto);
     return this.authService.register(dto);
   }
 
