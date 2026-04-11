@@ -5,5 +5,5 @@ export class CreatePetDto {
   birthDate: string;
   weight: number;
   sex: string;
-  userId: string;
+  photoUrl?: string;
 }
