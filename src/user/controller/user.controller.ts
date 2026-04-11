@@ -22,4 +22,9 @@ export class UserController {
   getAllPetsByUser(@Param('id') id: string) {
     return this.userService.getAllPetsByUser(id);
   }
+
+  @Get('/:id')
+  getUserById(@Param('id') id: string) {
+    return this.userService.getUserById(id);
+  }
 }
