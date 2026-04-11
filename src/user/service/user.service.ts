@@ -29,4 +29,18 @@ export class UserService {
     if (pets.length === 0) throw new Error('pets not found');
     return new MyPetsResponseDto(pets);
   }
+
+  async getAllPetsByUser(id: string) {
+    const pets: PetResponseDto[] = await this.prisma.pet.findMany({
+      where: {
+        petOwners: {
+          some: {
+            userId: id,
+          },
+        },
+      },
+    });
+    if (pets.length === 0) throw new Error('pets not found');
+    return new MyPetsResponseDto(pets);
+  }
 }

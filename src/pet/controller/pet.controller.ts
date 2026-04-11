@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { PetService } from '../service/pet.service';
 import { CreatePetDto } from '../dto/create-pet.dto';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
@@ -8,16 +16,11 @@ import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 export class PetController {
   constructor(private readonly petService: PetService) {}
 
-  @Post('/add_new_pet')
+  @Post()
   addPet(
     @Body() dto: CreatePetDto,
     @Req() req: Request & { user: { id: string } },
   ) {
     return this.petService.addPet(dto, req.user.id);
-  }
-
-  @Get('/all_pets_by_user')
-  getAllPetsByUser(@Req() req: Request & { user: { id: string } }) {
-    return this.petService.getAllPetsByUser(req.user.id);
   }
 }

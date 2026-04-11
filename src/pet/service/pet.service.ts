@@ -44,16 +44,4 @@ export class PetService {
       newPet.sex,
     );
   }
-
-  getAllPetsByUser(userId: string) {
-    return this.prisma.pet.findMany({
-      where: {
-        petOwners: {
-          some: {
-            userId: userId,
-          },
-        },
-      },
-    });
-  }
 }
