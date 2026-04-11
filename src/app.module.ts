@@ -12,12 +12,12 @@ import { UserModule } from './user/module/user.module';
 @Module({
   imports: [
     PetModule,
+    UserModule,
     PrismaModule,
     AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, JwtStrategyService],
