@@ -1,4 +1,4 @@
-export class CreateResponseDto {
+export class PetResponseDto {
   id: string;
   name: string;
   species: string;
@@ -6,7 +6,7 @@ export class CreateResponseDto {
   birthDate: string;
   weight: number;
   sex: string;
-  photoUrl?: string;
+  photoUrl: string | null;
 
   constructor(
     id: string,
@@ -25,6 +25,6 @@ export class CreateResponseDto {
     this.birthDate = birthDate;
     this.weight = weight;
     this.sex = sex;
-    this.photoUrl = photoUrl ? photoUrl : undefined;
+    this.photoUrl = photoUrl ? photoUrl : null;
   }
 }

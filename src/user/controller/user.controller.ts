@@ -11,4 +11,10 @@ export class UserController {
   getMe(@Req() req: Request & { user: { id: string } }) {
     return this.userService.getMe(req.user.id);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('my_pets')
+  getMyPets(@Req() req: Request & { user: { id: string } }) {
+    return this.userService.getMyPets(req.user.id);
+  }
 }

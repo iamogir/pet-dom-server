@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreatePetDto } from '../dto/create-pet.dto';
-import { CreateResponseDto } from '../dto/create-response.dto';
+import { PetResponseDto } from '../dto/pet-response.dto';
 
 @Injectable()
 export class PetService {
@@ -34,7 +34,7 @@ export class PetService {
         sex: true,
       },
     });
-    return new CreateResponseDto(
+    return new PetResponseDto(
       newPet.id,
       newPet.name,
       newPet.species,
