@@ -1,4 +1,4 @@
-export class ResponseRegisterDto {
+export class AuthResponseDto {
   access_token: string;
   user: {
     id: string;
