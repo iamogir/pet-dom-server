@@ -5,6 +5,7 @@ import { RegisterDto } from '../dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from '../dto/login.dto';
 import { ResponseRegisterDto } from '../dto/register-response.dto';
+import { MeResponseDto } from '../dto/me-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -44,5 +45,13 @@ export class AuthService {
 
   private generateToken(id: string) {
     return this.jwtService.sign({ id });
+  }
+
+  async getNe(id: string): Promise<MeResponseDto> {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+    if (!user) throw new Error('smth goes wrong');
+    return new MeResponseDto(user.id, user.email, user.name);
   }
 }
