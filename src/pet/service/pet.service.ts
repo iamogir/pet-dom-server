@@ -53,6 +53,20 @@ export class PetService {
     return this.createDtoObject(pet);
   }
 
+  async getAllUsersByPet(id: string) {
+    const users = await this.prisma.pet.findMany({
+      where: {
+        petOwners: {
+          some: {
+            petId: id,
+          },
+        },
+      },
+    });
+    if (users.length === 0) throw new Error('No users found');
+    return new PetUsersResponseDto(users);
+  }
+
   private createDtoObject(pet: PetResponseDto) {
     return new PetResponseDto(
       pet.id,
