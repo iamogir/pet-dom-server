@@ -1,15 +1,15 @@
-import { PetResponseDto } from './pet-response.dto';
+import { UserResponseDto } from '../../user/dto/user-response.dto';
 
 export class PetUsersResponseDto {
-  data: PetResponseDto[];
+  data: UserResponseDto[];
   meta: {
     total: number;
   };
 
-  constructor(pets: PetResponseDto[]) {
-    this.data = pets;
+  constructor(users: UserResponseDto[]) {
+    this.data = users;
     this.meta = {
-      total: pets.length,
+      total: users.length,
     };
   }
 }
