@@ -44,4 +44,24 @@ export class PetService {
       newPet.sex,
     );
   }
+
+  async getPetById(id: string) {
+    const pet = await this.prisma.pet.findUnique({
+      where: { id: id },
+    });
+    if (!pet) throw new Error('Pet not found');
+    return this.createDtoObject(pet);
+  }
+
+  private createDtoObject(pet: PetResponseDto) {
+    return new PetResponseDto(
+      pet.id,
+      pet.name,
+      pet.species,
+      pet.breed,
+      pet.birthDate,
+      pet.weight,
+      pet.sex,
+    );
+  }
 }
