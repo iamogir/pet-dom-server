@@ -28,4 +28,9 @@ export class PetController {
   getPetById(@Param('id') id: string) {
     return this.petService.getPetById(id);
   }
+
+  @Get('/:id/users')
+  getAllUsersByPet(@Param('id') id: string) {
+    return this.petService.getAllUsersByPet(id);
+  }
 }
