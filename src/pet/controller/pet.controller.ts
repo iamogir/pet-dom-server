@@ -24,7 +24,7 @@ export class PetController {
     return this.petService.addPet(dto, req.user.id);
   }
 
-  @Get()
+  @Get('/:id')
   getPetById(@Param('id') id: string) {
     return this.petService.getPetById(id);
   }
