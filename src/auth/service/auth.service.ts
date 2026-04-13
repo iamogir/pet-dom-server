@@ -15,6 +15,7 @@ export class AuthService {
 
   async register(dto: RegisterDto): Promise<AuthResponseDto> {
     const hash = await bcrypt.hash(dto.password, 10);
+    const bDay = new Date(dto.birthDate);
     const newUser = await this.prisma.user.create({
       data: {
         email: dto.email,
@@ -24,7 +25,7 @@ export class AuthService {
         phone: dto.phone,
         country: dto.country,
         gender: dto.gender,
-        birthDate: dto.birthDate,
+        birthDate: bDay,
         avatarUrl: dto.avatarUrl,
       },
     });
