@@ -6,7 +6,7 @@ export class PetResponseDto {
   birthDate: string;
   weight: number;
   sex: string;
-  photoUrl: string | null;
+  photoUrl?: string | null;
 
   constructor(
     id: string,
@@ -16,7 +16,7 @@ export class PetResponseDto {
     birthDate: string,
     weight: number,
     sex: string,
-    photoUrl?: string,
+    photoUrl?: string | null,
   ) {
     this.id = id;
     this.name = name;
@@ -25,6 +25,6 @@ export class PetResponseDto {
     this.birthDate = birthDate;
     this.weight = weight;
     this.sex = sex;
-    this.photoUrl = photoUrl ? photoUrl : null;
+    this.photoUrl = photoUrl ? photoUrl : undefined;
   }
 }

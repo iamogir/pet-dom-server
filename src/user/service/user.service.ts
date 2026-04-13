@@ -45,6 +45,16 @@ export class UserService {
       where: { id },
     });
     if (!user) throw new Error('smth goes wrong');
-    return new UserResponseDto(user.id, user.email, user.name);
+    return new UserResponseDto(
+      user.id,
+      user.email,
+      user.firstName,
+      user.lastName,
+      user.phone,
+      user.country,
+      user.gender,
+      String(user.birthDate),
+      user.avatarUrl,
+    );
   }
 }

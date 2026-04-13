@@ -19,7 +19,13 @@ export class AuthService {
       data: {
         email: dto.email,
         password: hash,
-        name: dto.name,
+        firstName: dto.firstName,
+        lastName: dto.lastName,
+        phone: dto.phone,
+        country: dto.country,
+        gender: dto.gender,
+        birthDate: dto.birthDate,
+        avatarUrl: dto.avatarUrl,
       },
     });
 
@@ -27,7 +33,13 @@ export class AuthService {
       this.generateToken(newUser.id),
       newUser.id,
       newUser.email,
-      newUser.name,
+      newUser.firstName,
+      newUser.lastName,
+      newUser.phone,
+      newUser.country,
+      newUser.gender,
+      String(newUser.birthDate),
+      newUser.avatarUrl,
     );
   }
 
@@ -43,7 +55,13 @@ export class AuthService {
       this.generateToken(user.id),
       user.id,
       user.email,
-      user.name,
+      user.firstName,
+      user.lastName,
+      user.phone,
+      user.country,
+      user.gender,
+      String(user.birthDate),
+      user.avatarUrl,
     );
   }
 
