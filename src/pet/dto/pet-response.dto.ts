@@ -8,23 +8,23 @@ export class PetResponseDto {
   sex: string;
   photoUrl?: string | null;
 
-  constructor(
-    id: string,
-    name: string,
-    species: string,
-    breed: string,
-    birthDate: string,
-    weight: number,
-    sex: string,
-    photoUrl?: string | null,
-  ) {
-    this.id = id;
-    this.name = name;
-    this.species = species;
-    this.breed = breed;
-    this.birthDate = birthDate;
-    this.weight = weight;
-    this.sex = sex;
-    this.photoUrl = photoUrl ? photoUrl : undefined;
+  constructor(pet: {
+    id: string;
+    name: string;
+    species: string;
+    breed: string;
+    birthDate: Date;
+    weight: number;
+    sex: string;
+    photoUrl: string | null;
+  }) {
+    this.id = pet.id;
+    this.name = pet.name;
+    this.species = pet.species;
+    this.breed = pet.breed;
+    this.birthDate = String(pet.birthDate);
+    this.weight = pet.weight;
+    this.sex = pet.sex;
+    this.photoUrl = pet.photoUrl ? pet.photoUrl : undefined;
   }
 }

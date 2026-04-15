@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { UserResponseDto } from '../dto/user-response.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserPetsResponseDto } from '../dto/user-pets-response.dto';
-import { PetResponseDto } from '../../pet/dto/pet-response.dto';
 
 @Injectable()
 export class UserService {
@@ -13,7 +12,7 @@ export class UserService {
   }
 
   async getMyPets(id: string) {
-    const pets: PetResponseDto[] = await this.prisma.pet.findMany({
+    const pets = await this.prisma.pet.findMany({
       where: {
         petOwners: {
           some: {
@@ -27,7 +26,7 @@ export class UserService {
   }
 
   async getAllPetsByUser(id: string) {
-    const pets: PetResponseDto[] = await this.prisma.pet.findMany({
+    const pets = await this.prisma.pet.findMany({
       where: {
         petOwners: {
           some: {

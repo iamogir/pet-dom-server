@@ -9,12 +9,13 @@ export class PetService {
   constructor(private prisma: PrismaService) {}
 
   async addPet(dto: CreatePetDto, userId: string) {
+    const bDay = new Date(dto.birthDate);
     const newPet = await this.prisma.pet.create({
       data: {
         name: dto.name,
         species: dto.species,
         breed: dto.breed,
-        birthDate: dto.birthDate,
+        birthDate: bDay,
         weight: dto.weight,
         sex: dto.sex,
         // createdAt: new Date().toString(),
@@ -35,15 +36,7 @@ export class PetService {
         sex: true,
       },
     });
-    return new PetResponseDto(
-      newPet.id,
-      newPet.name,
-      newPet.species,
-      newPet.breed,
-      newPet.birthDate,
-      newPet.weight,
-      newPet.sex,
-    );
+    return new PetResponseDto(newPet);
   }
 
   async getPetById(id: string) {
@@ -51,7 +44,7 @@ export class PetService {
       where: { id: id },
     });
     if (!pet) throw new Error('Pet not found');
-    return this.createDtoObject(pet);
+    return new PetResponseDto(pet);
   }
 
   async getAllUsersByPet(id: string) {
@@ -66,17 +59,5 @@ export class PetService {
     });
     if (users.length === 0) throw new Error('No users found');
     return new PetUsersResponseDto(users);
-  }
-
-  private createDtoObject(pet: PetResponseDto) {
-    return new PetResponseDto(
-      pet.id,
-      pet.name,
-      pet.species,
-      pet.breed,
-      pet.birthDate,
-      pet.weight,
-      pet.sex,
-    );
   }
 }

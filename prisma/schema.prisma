@@ -33,7 +33,7 @@ model Pet {
   name      String
   species   String
   breed     String
-  birthDate String
+  birthDate DateTime @db.Date
   weight    Float
   sex       String
   photoUrl  String?
