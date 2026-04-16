@@ -16,7 +16,7 @@ export class PetService {
         species: dto.species,
         breed: dto.breed,
         birthDate: bDay,
-        weight: dto.weight,
+        weight: Number(dto.weight),
         sex: dto.sex,
         // createdAt: new Date().toString(),
         petOwners: {
