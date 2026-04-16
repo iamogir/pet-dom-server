@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserResponseDto } from '../dto/user-response.dto';
 import { PrismaService } from '../../prisma/prisma.service';
-import { UserPetsResponseDto } from '../dto/user-pets-response.dto';
 import { PetResponseDto } from '../../pet/dto/pet-response.dto';
 
 @Injectable()
@@ -23,9 +22,8 @@ export class UserService {
       },
     });
     if (pets.length === 0) throw new Error('pets not found');
-    const newPets: PetResponseDto[] = [];
-    pets.map((pet) => newPets.push(new PetResponseDto(pet)));
-    return new UserPetsResponseDto(newPets);
+
+    return this.toPetResponseArray(pets);
   }
 
   async getAllPetsByUser(id: string) {
@@ -39,7 +37,7 @@ export class UserService {
       },
     });
     if (pets.length === 0) throw new Error('pets not found');
-    return new UserPetsResponseDto(pets);
+    return this.toPetResponseArray(pets);
   }
 
   async getUserById(id: string) {
@@ -58,5 +56,11 @@ export class UserService {
       String(user.birthDate),
       user.avatarUrl,
     );
+  }
+
+  private toPetResponseArray(pets: any[]) {
+    const newPets: PetResponseDto[] = [];
+    pets.map((pet) => newPets.push(new PetResponseDto(pet)));
+    return newPets;
   }
 }
