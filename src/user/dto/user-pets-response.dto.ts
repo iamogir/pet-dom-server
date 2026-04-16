@@ -5,7 +5,6 @@ export class UserPetsResponseDto {
   meta: {
     total: number;
   };
-  //TODO typing of data/pets !!!
 
   constructor(pets: PetResponseDto[]) {
     this.data = pets;
