@@ -11,11 +11,12 @@ import { PetService } from '../service/pet.service';
 import { CreatePetDto } from '../dto/create-pet.dto';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @Controller('pet')
 export class PetController {
   constructor(private readonly petService: PetService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   addPet(
     @Body() dto: CreatePetDto,
@@ -32,5 +33,10 @@ export class PetController {
   @Get('/:id/users')
   getAllUsersByPet(@Param('id') id: string) {
     return this.petService.getAllUsersByPet(id);
+  }
+
+  @Get()
+  getAllPets() {
+    return this.petService.getAllPets();
   }
 }
