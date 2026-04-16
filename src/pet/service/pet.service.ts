@@ -34,6 +34,7 @@ export class PetService {
         birthDate: true,
         weight: true,
         sex: true,
+        photoUrl: true,
       },
     });
     return new PetResponseDto(newPet);
