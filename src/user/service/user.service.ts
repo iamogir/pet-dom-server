@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserResponseDto } from '../dto/user-response.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserPetsResponseDto } from '../dto/user-pets-response.dto';
-import { toPetResponseArray } from '../../pet/mappers/pet.mapper';
+import { toPetResponseArrayDto } from '../../pet/lib/pet.mapper';
 
 @Injectable()
 export class UserService {
@@ -24,7 +24,7 @@ export class UserService {
     });
     if (pets.length === 0) throw new Error('pets not found');
 
-    return new UserPetsResponseDto(toPetResponseArray(pets));
+    return toPetResponseArrayDto(pets);
   }
 
   async getAllPetsByUser(id: string) {
@@ -38,7 +38,7 @@ export class UserService {
       },
     });
     if (pets.length === 0) throw new Error('pets not found');
-    return new UserPetsResponseDto(toPetResponseArray(pets));
+    return toPetResponseArrayDto(pets);
   }
 
   async getUserById(id: string) {

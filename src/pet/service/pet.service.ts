@@ -4,6 +4,7 @@ import { CreatePetDto } from '../dto/create-pet.dto';
 import { PetResponseDto } from '../dto/pet-response.dto';
 import { PetUsersResponseDto } from '../dto/pet-users-response.dto';
 import { UserPetsResponseDto } from '../../user/dto/user-pets-response.dto';
+import { toPetResponseArrayDto } from '../lib/pet.mapper';
 
 @Injectable()
 export class PetService {
@@ -66,10 +67,6 @@ export class PetService {
   async getAllPets() {
     const pets = await this.prisma.pet.findMany();
     if (pets.length === 0) throw new Error('No pets');
-
-    const newPets: PetResponseDto[] = [];
-    pets.map((pet) => newPets.push(new PetResponseDto(pet)));
-
-    return new UserPetsResponseDto(newPets);
+    return toPetResponseArrayDto(pets);
   }
 }
