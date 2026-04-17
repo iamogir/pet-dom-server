@@ -1,6 +1,6 @@
-import { PetResponseDto } from '../../pet/dto/pet-response.dto';
+import { PetResponseDto } from './pet-response.dto';
 
-export class UserPetsResponseDto {
+export class PetsArrayResponseDto {
   data: PetResponseDto[];
   meta: {
     total: number;

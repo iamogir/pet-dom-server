@@ -9,25 +9,15 @@ export class UserResponseDto {
   gender: string;
   birthDate: string | Date;
 
-  constructor(
-    id: string,
-    email: string,
-    firstName: string,
-    lastName: string,
-    phone: string,
-    country: string,
-    gender: string,
-    birthDate: string,
-    avatarUrl?: string | null,
-  ) {
-    this.id = id;
-    this.email = email;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.phone = phone;
-    this.country = country;
-    this.gender = gender;
-    this.birthDate = String(birthDate);
-    this.avatarUrl = avatarUrl ? avatarUrl : undefined;
+  constructor(user: any) {
+    this.id = user.id;
+    this.email = user.email;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.phone = user.phone;
+    this.country = user.country;
+    this.gender = user.gender;
+    this.birthDate = String(user.birthDate);
+    this.avatarUrl = user.avatarUrl ? user.avatarUrl : undefined;
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { UserResponseDto } from '../dto/user-response.dto';
 import { PrismaService } from '../../prisma/prisma.service';
-import { UserPetsResponseDto } from '../dto/user-pets-response.dto';
 import { toPetResponseArrayDto } from '../../pet/lib/pet.mapper';
+import { toUserResponseArrayDto } from '../lib/user.mapper';
 
 @Injectable()
 export class UserService {
@@ -46,23 +46,13 @@ export class UserService {
       where: { id },
     });
     if (!user) throw new Error('smth goes wrong');
-    return new UserResponseDto(
-      user.id,
-      user.email,
-      user.firstName,
-      user.lastName,
-      user.phone,
-      user.country,
-      user.gender,
-      String(user.birthDate),
-      user.avatarUrl,
-    );
+    return new UserResponseDto(user);
   }
 
-  const getAllUsers() {
-    const users = this.prisma.user.findMany();
-    if (!users) throw new Error('users not found');
+  async getAllUsers() {
+    const users = await this.prisma.user.findMany();
+    if (users.length === 0) throw new Error('users not found');
 
-    return
+    return toUserResponseArrayDto(users);
   }
 }
