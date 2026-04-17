@@ -81,4 +81,13 @@ export class PetService {
     if (!pet) throw new Error('Pet not found');
     return new PetResponseDto(pet);
   }
+
+  async deletePetById(id: string) {
+    const pet = await this.prisma.pet.delete({
+      where: { id },
+    });
+    if (!pet) throw new Error('Pet not found');
+
+    return new PetResponseDto(pet);
+  }
 }
