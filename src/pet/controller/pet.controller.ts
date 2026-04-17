@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Get,
-  Param,
+  Param, Patch,
   Post,
   Req,
   UseGuards,
@@ -38,5 +38,10 @@ export class PetController {
   @Get()
   getAllPets() {
     return this.petService.getAllPets();
+  }
+
+  @Patch('/edit/:id')
+  editPetById(@Param('id') id: string) {
+    return this.petService.editPetById(id);
   }
 }
