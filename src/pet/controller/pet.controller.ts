@@ -10,6 +10,7 @@ import {
 import { PetService } from '../service/pet.service';
 import { CreatePetDto } from '../dto/create-pet.dto';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
+import { EditPetDto } from '../dto/edit-pet.dto';
 
 // @UseGuards(JwtAuthGuard)
 @Controller('pet')
@@ -41,7 +42,7 @@ export class PetController {
   }
 
   @Patch('/edit/:id')
-  editPetById(@Param('id') id: string) {
-    return this.petService.editPetById(id);
+  editPetById(@Param('id') id: string, @Body() dto: EditPetDto) {
+    return this.petService.editPetById(id, dto);
   }
 }

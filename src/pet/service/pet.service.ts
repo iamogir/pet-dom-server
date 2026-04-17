@@ -5,6 +5,7 @@ import { PetResponseDto } from '../dto/pet-response.dto';
 import { UsersArrayResponseDto } from '../../user/dto/users-array-response.dto';
 import { PetsArrayResponseDto } from '../dto/pets-array-response.dto';
 import { toPetResponseArrayDto } from '../lib/pet.mapper';
+import { EditPetDto } from '../dto/edit-pet.dto';
 
 @Injectable()
 export class PetService {
@@ -68,5 +69,15 @@ export class PetService {
     const pets = await this.prisma.pet.findMany();
     if (pets.length === 0) throw new Error('No pets');
     return toPetResponseArrayDto(pets);
+  }
+
+  async editPetById(id: string, dto: EditPetDto) {
+    const pet = await this.prisma.pet.update({
+      where: { id },
+      data: dto,
+    });
+    if (!pet) throw new Error('Pet not found');
+    return new PetResponseDto(pet);
+
   }
 }
