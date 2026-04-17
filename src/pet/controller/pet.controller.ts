@@ -41,7 +41,7 @@ export class PetController {
     return this.petService.getAllPets();
   }
 
-  @Patch('/edit/:id')
+  @Patch('/:id')
   editPetById(@Param('id') id: string, @Body() dto: EditPetDto) {
     return this.petService.editPetById(id, dto);
   }

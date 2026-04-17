@@ -4,7 +4,7 @@ export class PetResponseDto {
   species: string;
   breed: string;
   birthDate: string;
-  weight: number;
+  weight: string;
   sex: string;
   photoUrl?: string | null;
 
@@ -23,7 +23,7 @@ export class PetResponseDto {
     this.species = pet.species;
     this.breed = pet.breed;
     this.birthDate = String(pet.birthDate);
-    this.weight = pet.weight;
+    this.weight = String(pet.weight);
     this.sex = pet.sex;
     this.photoUrl = pet.photoUrl ? pet.photoUrl : undefined;
   }
