@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller,
+  Controller, Delete,
   Get,
   Param, Patch,
   Post,
@@ -45,5 +45,11 @@ export class PetController {
   @Patch('/:id')
   editPetById(@Param('id') id: string, @Body() dto: EditPetDto) {
     return this.petService.editPetById(id, dto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:id')
+  deletePetById(@Param('id') id: string) {
+    return this.petService.deletePetById(id);
   }
 }
