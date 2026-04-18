@@ -33,8 +33,9 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('/me')
-  editUser() {
-    return this.userService.editUser();
+  editUser(@Req() req: Request & { user: { id: string } }) {
+    return this.userService.editUser(req.user.id);
   }
 }

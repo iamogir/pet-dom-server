@@ -55,4 +55,8 @@ export class UserService {
 
     return toUserResponseArrayDto(users);
   }
+
+  async editUser(id: string) {
+
+  }
 }
