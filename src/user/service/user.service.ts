@@ -3,6 +3,8 @@ import { UserResponseDto } from '../dto/user-response.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { toPetResponseArrayDto } from '../../pet/lib/pet.mapper';
 import { toUserResponseArrayDto } from '../lib/user.mapper';
+import { EditUserDto } from '../dto/edit-user.dto';
+import { SchemaUserDto } from '../dto/schema-user.dto';
 
 @Injectable()
 export class UserService {
@@ -56,7 +58,13 @@ export class UserService {
     return toUserResponseArrayDto(users);
   }
 
-  async editUser(id: string) {
-
+  async editUser(id: string, dto: EditUserDto) {
+    const updatedPet = new SchemaUserDto(dto);
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: updatedPet,
+    });
+    if (!user) throw new Error('smth goes wrong');
+    return new UserResponseDto(user);
   }
 }
