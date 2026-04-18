@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Patch, Req, UseGuards } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 
@@ -31,5 +31,10 @@ export class UserController {
   @Get()
   getAllUsers() {
     return this.userService.getAllUsers();
+  }
+
+  @Patch('/me')
+  editUser() {
+    return this.userService.editUser();
   }
 }
