@@ -3,7 +3,7 @@ export class CreatePetDto {
   species: string;
   breed: string;
   birthDate: string;
-  weight: number;
+  weight: string;
   sex: string;
   photoUrl?: string;
 }

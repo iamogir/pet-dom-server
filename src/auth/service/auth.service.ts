@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from '../dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from '../dto/login.dto';
-import { ResponseRegisterDto } from '../dto/register-response.dto';
+import { AuthResponseDto } from '../dto/auth-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,25 +13,38 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(dto: RegisterDto): Promise<ResponseRegisterDto> {
+  async register(dto: RegisterDto): Promise<AuthResponseDto> {
     const hash = await bcrypt.hash(dto.password, 10);
+    const bDay = new Date(dto.birthDate);
     const newUser = await this.prisma.user.create({
       data: {
         email: dto.email,
         password: hash,
-        name: dto.name,
+        firstName: dto.firstName,
+        lastName: dto.lastName,
+        phone: dto.phone,
+        country: dto.country,
+        gender: dto.gender,
+        birthDate: bDay,
+        avatarUrl: dto.avatarUrl,
       },
     });
 
-    return new ResponseRegisterDto(
+    return new AuthResponseDto(
       this.generateToken(newUser.id),
       newUser.id,
       newUser.email,
-      newUser.name,
+      newUser.firstName,
+      newUser.lastName,
+      newUser.phone,
+      newUser.country,
+      newUser.gender,
+      String(newUser.birthDate),
+      newUser.avatarUrl,
     );
   }
 
-  async login(dto: LoginDto): Promise<{ access_token: string }> {
+  async login(dto: LoginDto): Promise<AuthResponseDto> {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });
@@ -39,7 +52,18 @@ export class AuthService {
     const isValid = await bcrypt.compare(dto.password, user.password);
     if (!isValid) throw new UnauthorizedException();
 
-    return { access_token: this.generateToken(user.id) };
+    return new AuthResponseDto(
+      this.generateToken(user.id),
+      user.id,
+      user.email,
+      user.firstName,
+      user.lastName,
+      user.phone,
+      user.country,
+      user.gender,
+      String(user.birthDate),
+      user.avatarUrl,
+    );
   }
 
   private generateToken(id: string) {
