@@ -13,15 +13,15 @@ export class PetService {
   constructor(private prisma: PrismaService) {}
 
   async addPet(dto: CreatePetDto, userId: string) {
-    const bDay = new Date(dto.birthDate);
+    // const bDay = new Date(dto.birthDate);
     const newPet = await this.prisma.pet.create({
       data: {
         name: dto.name,
         species: dto.species,
         breed: dto.breed,
-        birthDate: bDay,
-        weight: Number(dto.weight),
-        sex: dto.sex,
+        birthDate: new Date(),
+        weight: 0,
+        sex: '',
         // createdAt: new Date().toString(),
         petOwners: {
           create: {
