@@ -3,7 +3,6 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { CreatePetDto } from '../dto/create-pet.dto';
 import { PetResponseDto } from '../dto/pet-response.dto';
 import { UsersArrayResponseDto } from '../../user/dto/users-array-response.dto';
-import { PetsArrayResponseDto } from '../dto/pets-array-response.dto';
 import { toPetResponseArrayDto } from '../lib/pet.mapper';
 import { EditPetDto } from '../dto/edit-pet.dto';
 import { SchemaPetDto } from '../dto/schema-pet.dto';
@@ -13,16 +12,12 @@ export class PetService {
   constructor(private prisma: PrismaService) {}
 
   async addPet(dto: CreatePetDto, userId: string) {
-    // const bDay = new Date(dto.birthDate);
     const newPet = await this.prisma.pet.create({
       data: {
         name: dto.name,
         species: dto.species,
-        breed: dto.breed,
-        birthDate: new Date(),
-        weight: 0,
-        sex: '',
-        // createdAt: new Date().toString(),
+        breed: dto.breed ?? null,
+        photoUrl: dto.photoUrl ?? undefined,
         petOwners: {
           create: {
             userId: userId,
@@ -35,9 +30,6 @@ export class PetService {
         name: true,
         species: true,
         breed: true,
-        birthDate: true,
-        weight: true,
-        sex: true,
         photoUrl: true,
       },
     });

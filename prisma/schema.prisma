@@ -32,10 +32,10 @@ model Pet {
   id        String @id @default(uuid())
   name      String
   species   String
-  breed     String
-  birthDate DateTime @db.Date
-  weight    Float
-  sex       String
+  breed     String?
+  birthDate DateTime? @db.Date
+  weight    Float?
+  sex       String?
   photoUrl  String?
   // createdAt DateTime @default(now())
 
