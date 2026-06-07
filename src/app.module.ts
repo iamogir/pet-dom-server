@@ -8,6 +8,7 @@ import { AuthModule } from './auth/module/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtStrategyService } from './auth/jwt-strategy/jwt-strategy.service';
 import { UserModule } from './user/module/user.module';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserModule } from './user/module/user.module';
     UserModule,
     PrismaModule,
     AuthModule,
+    StorageModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
