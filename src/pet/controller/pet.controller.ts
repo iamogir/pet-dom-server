@@ -24,11 +24,13 @@ export class PetController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
+  @UseInterceptors(FileInterceptor('avatar'))
   addPet(
     @Body() dto: CreatePetDto,
     @Req() req: Request & { user: { id: string } },
+    @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.petService.addPet(dto, req.user.id);
+    return this.petService.addPet(dto, req.user.id, file);
   }
 
   @Get('/:id')
