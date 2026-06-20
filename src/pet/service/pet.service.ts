@@ -6,10 +6,14 @@ import { UsersArrayResponseDto } from '../../user/dto/users-array-response.dto';
 import { toPetResponseArrayDto } from '../lib/pet.mapper';
 import { EditPetDto } from '../dto/edit-pet.dto';
 import { SchemaPetDto } from '../dto/schema-pet.dto';
+import { StorageService } from '../../storage/storage.service';
 
 @Injectable()
 export class PetService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly storageService: StorageService,
+  ) {}
 
   async addPet(dto: CreatePetDto, userId: string) {
     const newPet = await this.prisma.pet.create({
@@ -69,6 +73,20 @@ export class PetService {
     const pet = await this.prisma.pet.update({
       where: { id },
       data: updatedPet,
+    });
+    if (!pet) throw new Error('Pet not found');
+    return new PetResponseDto(pet);
+  }
+
+  async uploadPhoto(id: string, file: Express.Multer.File) {
+    const photoUrl = await this.storageService.uploadImage(file);
+
+    console.log('UPLOAD ID:', id);
+    console.log('FILE:', file?.originalname);
+
+    const pet = await this.prisma.pet.update({
+      where: { id },
+      data: { photoUrl },
     });
     if (!pet) throw new Error('Pet not found');
     return new PetResponseDto(pet);

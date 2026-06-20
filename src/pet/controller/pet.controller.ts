@@ -7,12 +7,15 @@ import {
   Patch,
   Post,
   Req,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PetService } from '../service/pet.service';
 import { CreatePetDto } from '../dto/create-pet.dto';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 import { EditPetDto } from '../dto/edit-pet.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 // @UseGuards(JwtAuthGuard)
 @Controller('pet')
@@ -47,6 +50,15 @@ export class PetController {
   @Patch('/:id')
   editPetById(@Param('id') id: string, @Body() dto: EditPetDto) {
     return this.petService.editPetById(id, dto);
+  }
+
+  @Post('/:id/photo')
+  @UseInterceptors(FileInterceptor('avatar'))
+  async uploadPhoto(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.petService.uploadPhoto(id, file);
   }
 
   @UseGuards(JwtAuthGuard)
