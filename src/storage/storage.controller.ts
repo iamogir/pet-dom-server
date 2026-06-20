@@ -5,17 +5,18 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { StorageService } from './storage.service';
 
 @Controller('storage')
 export class StorageController {
+  constructor(private readonly storageService: StorageService) {}
   @Post('test-upload')
   @UseInterceptors(FileInterceptor('avatar'))
-  testUpload(@UploadedFile() file: any) {
+  async testUpload(@UploadedFile() file: any) {
+    const url = await this.storageService.uploadImage(file);
     console.log(file);
     return {
-      success: true,
-      filename: file.originalname,
-      size: file.size,
+      url,
     };
   }
 }
