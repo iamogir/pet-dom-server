@@ -12,11 +12,11 @@ export class PetResponseDto {
     id: string;
     name: string;
     species: string;
-    breed?: string;
-    birthDate?: Date;
-    weight?: number;
-    sex?: string;
-    photoUrl?: string;
+    breed: string | null;
+    birthDate: Date | null;
+    weight: number | null;
+    sex: string | null;
+    photoUrl: string | null;
   }) {
     this.id = pet.id;
     this.name = pet.name;
