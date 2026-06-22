@@ -9,13 +9,22 @@ export class StorageService {
         {
           folder: 'pet-dom',
           resource_type: 'image',
+          transformation: {
+            fetch_format: 'auto',
+            quality: 'auto',
+          },
         },
         (error, result) => {
           if (error) return reject(error as Error);
           if (!result) {
             return reject(new Error('Cloudinary upload failed'));
           }
-          resolve(result.secure_url);
+          const optimizedUrl = result.secure_url.replace(
+            '/upload/',
+            '/upload/f_auto,q_auto/',
+          );
+
+          resolve(optimizedUrl);
         },
       );
       uploadStream.end(file.buffer);
