@@ -8,12 +8,14 @@ import { EditPetDto } from '../dto/edit-pet.dto';
 import { SchemaPetDto } from '../dto/schema-pet.dto';
 import { StorageService } from '../../storage/storage.service';
 import { PetCreateResponseDto } from '../dto/pet-create-response';
+import { AiService } from '../../ai/service/ai.service';
 
 @Injectable()
 export class PetService {
   constructor(
     private prisma: PrismaService,
     private readonly storageService: StorageService,
+    private readonly aiService: AiService,
   ) {}
 
   async addPet(
@@ -112,5 +114,31 @@ export class PetService {
     if (!pet) throw new Error('Pet not found');
 
     return new PetResponseDto(pet);
+  }
+
+  async getAiAdvice(id: string) {
+    const pet = await this.prisma.pet.findUnique({
+      where: { id },
+    });
+    if (!pet) throw new Error('Pet not found');
+
+    const prompt = `
+    You are a pet care assistant.
+    Analyze this pet profile and give 3 short, safe, general care recommendations.
+    
+    Pet data:
+    Name: ${pet.name}
+    Species: ${pet.species}
+    Breed: ${pet.breed ?? 'unknown'}
+    Photo URL: ${pet.photoUrl ?? 'not provided'}
+    
+    Rules:
+    - Do not diagnose diseases.
+    - Do not prescribe medication.
+    - If something looks risky, recommend contacting a veterinarian.
+    - Answer in English.
+    `;
+
+    return this.aiService.generatePetAdvice(prompt);
   }
 }
