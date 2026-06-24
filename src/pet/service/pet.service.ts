@@ -7,8 +7,9 @@ import { toPetResponseArrayDto } from '../lib/pet.mapper';
 import { EditPetDto } from '../dto/edit-pet.dto';
 import { SchemaPetDto } from '../dto/schema-pet.dto';
 import { StorageService } from '../../storage/storage.service';
-import { PetCreateResponseDto } from '../dto/pet-create-response';
+import { PetCreateResponseDto } from '../dto/pet-create-response.dto';
 import { AiService } from '../../ai/service/ai.service';
+import { AiAdviceDto } from '../../ai/dto/ai-advice.dto';
 
 @Injectable()
 export class PetService {
@@ -139,6 +140,6 @@ export class PetService {
     - Answer in English.
     `;
 
-    return this.aiService.generatePetAdvice(prompt);
+    return new AiAdviceDto(await this.aiService.generatePetAdvice(prompt));
   }
 }
