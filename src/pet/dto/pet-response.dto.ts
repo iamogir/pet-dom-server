@@ -2,29 +2,29 @@ export class PetResponseDto {
   id: string;
   name: string;
   species: string;
-  breed: string;
-  birthDate: string;
-  weight: string;
-  sex: string;
-  photoUrl?: string | null;
+  breed?: string;
+  birthDate?: string;
+  weight?: string;
+  sex?: string;
+  photoUrl?: string;
 
   constructor(pet: {
     id: string;
     name: string;
     species: string;
-    breed: string;
-    birthDate: Date;
-    weight: number;
-    sex: string;
+    breed: string | null;
+    birthDate: Date | null;
+    weight: number | null;
+    sex: string | null;
     photoUrl: string | null;
   }) {
     this.id = pet.id;
     this.name = pet.name;
     this.species = pet.species;
-    this.breed = pet.breed;
-    this.birthDate = String(pet.birthDate);
-    this.weight = String(pet.weight);
-    this.sex = pet.sex;
-    this.photoUrl = pet.photoUrl ? pet.photoUrl : undefined;
+    if (pet.breed) this.breed = pet.breed;
+    if (pet.birthDate) this.birthDate = String(pet.birthDate);
+    if (pet.weight) this.weight = String(pet.weight);
+    if (pet.sex) this.sex = pet.sex;
+    if (pet.photoUrl) this.photoUrl = pet.photoUrl;
   }
 }
