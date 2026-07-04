@@ -9,6 +9,8 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtStrategyService } from './auth/jwt-strategy/jwt-strategy.service';
 import { UserModule } from './user/module/user.module';
 import { StorageModule } from './storage/storage.module';
+import { AiModule } from './ai/module/ai.module';
+import { AiController } from './ai/controller/ai.controller';
 
 @Module({
   imports: [
@@ -17,6 +19,7 @@ import { StorageModule } from './storage/storage.module';
     PrismaModule,
     AuthModule,
     StorageModule,
+    AiModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

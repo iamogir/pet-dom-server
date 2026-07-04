@@ -54,6 +54,7 @@ export class PetController {
     return this.petService.editPetById(id, dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('/:id/photo')
   @UseInterceptors(FileInterceptor('avatar'))
   async uploadPhoto(
@@ -67,5 +68,11 @@ export class PetController {
   @Delete('/:id')
   deletePetById(@Param('id') id: string) {
     return this.petService.deletePetById(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/:id/ai-advice')
+  getAiAdvice(@Param('id') id: string) {
+    return this.petService.getAiAdvice(id);
   }
 }
